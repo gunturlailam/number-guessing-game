@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="style.css" />
+    <title>Number Guessing Game</title>
+  </head>
+  <body>
+    <div id="container">
+      <div id="summary">
+        <h1>Mari kita main tebak-tebakan angka</h1>
+        <label for="player"
+          >Masukkan angka yang anda tebak <br />
+          angka 1-10</label
+        >
+        <input type="text" id="player" />
+        <button type="submit" id="submitPlayer">Submit</button>
+        <button type="submit" id="reset">Reset</button>
+
+        <audio id="soundMenang" src="assets/hidup-jokowi.mp3"></audio>
+        <audio id="soundKalah" src="assets/wiwok-detok.mp3"></audio>
+        <p id="result"></p>
+      </div>
+    </div>
+
+    <script>
+      const angkaAcak = Math.floor(Math.random() * 10) + 1;
+      const submit = document.getElementById("submitPlayer");
+      const result = document.getElementById("result");
+      const reset = document.getElementById("reset");
+      const menang = document.getElementById("soundMenang");
+      const kalah = document.getElementById("soundKalah");
+
+      submit.addEventListener("click", () => {
+        const player = parseInt(document.getElementById("player").value);
+
+        if (isNaN(player)) {
+          result.textContent = "Masukkan angka yang valid.";
+        } else if (player < angkaAcak) {
+          result.textContent = "Terlalu kecil, coba lagi.";
+          kalah.play();
+        } else if (player > angkaAcak && player < 10) {
+          result.textContent = "Terlalu besar, coba lagi.";
+          kalah.play();
+        } else if (player > 10) {
+          result.textContent = "tidak boleh lebih besar daripada 10";
+          kalah.play();
+        } else {
+          result.textContent = `Benar! 🎉 Angkanya adalah ${angkaAcak}`;
+          menang.play();
+        }
+      });
+
+      //   membuat reset
+      reset.addEventListener("click", () => {
+        document.getElementById("player").value = "";
+        result.textContent = "";
+      });
+    </script>
+  </body>
+</html>
